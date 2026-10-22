@@ -12,14 +12,14 @@ public class Task {
 
     private String title;
 
-    private boolean completed;
+    private boolean done;
 
     public Task() {
     }
 
     public Task(String title) {
         this.title = title;
-        this.completed = false;
+        this.done = false;
     }
 
     public Long getId() {
@@ -30,7 +30,7 @@ public class Task {
         return title;
     }
 
-    public boolean isCompleted() {
-        return completed;
+    public boolean isDone() {
+        return done;
     }
 }

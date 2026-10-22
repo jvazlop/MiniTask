@@ -7,8 +7,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 class TaskTest {
 
     @Test
-    void newTaskShouldNotBeCompleted() {
+    void newTaskShouldNotBeDone() {
         var task = new Task("Comprar leche");
-        assertThat(task.isCompleted()).isFalse();
+        assertThat(task.isDone()).isFalse();
     }
 }
