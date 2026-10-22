@@ -20,6 +20,15 @@ public class TaskControllerV1 {
         return tasks;
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<SimpleTask> get(@PathVariable("id") Long id) {
+        return tasks.stream()
+                .filter(t -> t.getId().equals(id))
+                .findFirst()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @PostMapping
     public ResponseEntity<SimpleTask> create(@RequestBody CreateTaskDTO dto) {
         SimpleTask task = new SimpleTask(dto.title());
