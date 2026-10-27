@@ -24,8 +24,7 @@ public class TaskService {
     }
 
     public SimpleTask createTask(CreateTaskDTO dto) {
-        // Versión inicial sin normalizar: se corregirá cuando exista el test que lo exija.
-        SimpleTask task = new SimpleTask(dto.title());
+        SimpleTask task = new SimpleTask(dto.title().strip());
         task.setId(nextId++);
         return repository.save(task);
     }
