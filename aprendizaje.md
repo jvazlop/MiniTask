@@ -37,3 +37,39 @@ Con esto:
 - `GET /v1/tasks/{id}` inexistente → `404` sin cuerpo (segundo test del mismo ciclo, que ya pasaba por casualidad pero ahora lo cubre la implementación real, no la ausencia de ruta).
 
 
+
+## Sesion 4 - Servicio y normalizacion del titulo
+
+### Red
+
+TaskServiceTest.createStripsTitleEdges:
+
+- repository.save devuelve su argumento.
+- createTask(new CreateTaskDTO("  Repasar Spring Boot  "))
+- Se esperaba titulo "Repasar Spring Boot" y done=false.
+- Fallo porque createTask guardaba dto.title() sin normalizar.
+
+### Cambio
+
+createTask ahora usa dto.title().strip() antes de crear SimpleTask.
+
+### Verde
+
+- TaskServiceTest pasa (2 tests).
+- Se extrajo TaskService + TaskRepository/InMemoryTaskRepository.
+- TaskControllerV1 y TaskControllerV2 delegan en TaskService.
+- Las pruebas MVC se actualizaron para mockear TaskService.
+- mvn test queda en verde (9 tests).
+
+## Sesion 4b - Plan pendiente (no implementado todav�a)
+
+Idea para el proximo avance:
+
+- Operacion idempotente para completar una tarea: completeTask(Long id).
+- Tests previstos:
+  - completeMarksTaskDone: la tarea queda con done=true.
+  - completeTwiceKeepsTaskDone: repetir la operaci�n no la desmarca.
+- Implementacion en TaskService, probada con repositorio mock.
+- Conservar titulo e id.
+- Conectar a un endpoint propio, por ejemplo PATCH /v4/tasks/{id}/complete.
+- Probar recurso inexistente y su 404.
